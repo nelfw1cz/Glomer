@@ -1,0 +1,39 @@
+{
+  "id": "medieval",
+  "name": "Medieval",
+  "scheme": "dark",
+  "texture": "none",
+  "glass": "frost",
+  "vars": {
+    "--bg": "#0a0705",
+    "--acc": "224,168,74",
+    "--torch": "255,120,40",
+    "--aur1": "224,168,74",
+    "--aur2": "190,60,50",
+    "--aur3": "120,80,40",
+    "--panel": "rgba(27,18,11,.64)",
+    "--line": "rgba(255,220,170,.10)",
+    "--fg": "#efe3d0",
+    "--dim": "#9a8670",
+    "--k": "#e8715a",
+    "--b": "#e0b872",
+    "--s": "#b7c97a",
+    "--n": "#f0a35e",
+    "--c": "#7d6a55",
+    "--d": "#d9a8a0",
+    "--f": "#f0cf8f",
+    "--sf": "#e9a08c",
+    "--cl": "#ffd98a",
+    "--co": "#d9a8a0",
+    "--o": "#efe3d0",
+    "--ui": "Georgia, 'Palatino Linotype', 'Book Antiqua', serif"
+  },
+  "decor": {
+    "type": "frame",
+    "inset": 18,
+    "colors": {
+      "gold": "#e0a84a",
+      "stone": "#8a7a63"
+    }
+  }
+}

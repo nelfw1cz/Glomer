@@ -1,0 +1,38 @@
+{
+  "id": "liquid",
+  "name": "Liquid glass",
+  "scheme": "dark",
+  "texture": "none",
+  "glass": "liquid",
+  "vars": {
+    "--bg": "#070a14",
+    "--acc": "120,170,255",
+    "--torch": "255,255,255",
+    "--aur1": "80,140,255",
+    "--aur2": "255,100,200",
+    "--aur3": "60,230,200",
+    "--panel": "rgba(255,255,255,.07)",
+    "--line": "rgba(255,255,255,.2)",
+    "--fg": "#f5f8ff",
+    "--dim": "#9aa7c4",
+    "--k": "#ff8ac0",
+    "--b": "#9cd2ff",
+    "--s": "#a8f5c4",
+    "--n": "#ffd36e",
+    "--c": "#7c8bb0",
+    "--d": "#d2c4ff",
+    "--f": "#8ef0ff",
+    "--sf": "#ffb3c1",
+    "--cl": "#ffe08a",
+    "--co": "#9cd2ff",
+    "--o": "#f5f8ff",
+    "--glass-blur": "30px",
+    "--glass-sat": "1.9",
+    "--glass-edge": "inset 0 1px 0 rgba(255,255,255,.55), inset 1px 0 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(255,255,255,.12), inset 0 0 30px rgba(255,255,255,.06)"
+  },
+  "decor": {
+    "type": "none",
+    "inset": 4,
+    "colors": {}
+  }
+}

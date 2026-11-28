@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data:; font-src 'self'">
+<title>PyForge</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="liquid" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".010 .016" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="34" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<div id="bgimg" aria-hidden="true"></div>
+<canvas id="aurora" aria-hidden="true"></canvas>
+<canvas id="decor" aria-hidden="true"></canvas>
+<div class="vig" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div id="app">
+  <header class="titlebar glass" id="titlebar">
+    <button class="tbtn" id="exToggle" type="button" aria-pressed="false" title="Проводник (Ctrl+Shift+E)" aria-label="Проводник"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></button>
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2 4 14h6.5L9.5 22 20 9.5h-6.8z"/></svg>
+      <span class="name">PYFORGE</span>
+    </div>
+    <div class="file"><span id="fname">Безымянный</span><i id="dirty" hidden title="Есть несохранённые изменения"></i></div>
+    <span class="modeName" id="modeName"></span>
+    <button class="run" id="run" type="button" title="F5 или Ctrl+Enter"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1 11 6 2 11z"/></svg><span id="runLbl">Запустить</span></button>
+    <div class="wc">
+      <button class="wbtn" id="wMin" type="button" title="Свернуть" aria-label="Свернуть"><svg viewBox="0 0 12 12"><path d="M2 6h8"/></svg></button>
+      <button class="wbtn" id="wMax" type="button" title="Развернуть" aria-label="Развернуть"><svg viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" rx="1.5"/></svg></button>
+      <button class="wbtn x" id="wClose" type="button" title="Закрыть" aria-label="Закрыть"><svg viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7"/></svg></button>
+    </div>
+  </header>
+
+  <div class="body" id="bodyGrid">
+    <div class="sweep" id="sweep" aria-hidden="true"></div>
+    <nav class="side glass" id="side" aria-label="Режимы"></nav>
+
+    <aside class="explorer glass" id="explorer" hidden aria-label="Проводник">
+      <div class="ex-head">
+        <span class="ex-title" id="exTitle">Проводник</span>
+        <button class="ex-btn" id="exNewFile" type="button" title="Новый файл" aria-label="Новый файл"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M12 11v6M9 14h6"/></svg></button>
+        <button class="ex-btn" id="exNewDir" type="button" title="Новая папка" aria-label="Новая папка"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM12 10v6M9 13h6"/></svg></button>
+        <button class="ex-btn" id="exRefresh" type="button" title="Обновить" aria-label="Обновить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg></button>
+        <button class="ex-btn" id="exClose" type="button" title="Скрыть панель" aria-label="Скрыть панель"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="ex-tree" id="exTree" role="tree" aria-label="Файлы" hidden></div>
+      <div class="ex-empty" id="exEmpty"><span>Папка не открыта.</span><button class="chip primary" id="exOpen" type="button">Открыть папку…</button><span class="ex-hint">Ctrl+Shift+O</span></div>
+    </aside>
+
+    <main class="stage" id="stage">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Открытые файлы"></div>
+      <section class="bar glass hud" id="hud" hidden>
+        <span class="badge" id="lvl">LV 1</span>
+        <div class="meter"><label><span>XP</span><span id="xpTxt">0 / 100</span></label><div class="tr"><div class="fl" id="xpFill"></div></div></div>
+        <div class="meter"><label><span>HP</span><span id="hpTxt">100 / 100</span></label><div class="tr"><div class="fl" id="hpFill"></div></div></div>
+        <div class="combo" id="combo">×0</div>
+      </section>
+      <section class="bar glass snips" id="snips"></section>
+      <section class="bar glass snips botbar" id="botbar" hidden></section>
+      <section class="bar glass timebar" id="timebar" hidden>
+        <span class="cap">ИСТОРИЯ ИЗМЕНЕНИЙ</span>
+        <input class="tslider" id="tslider" type="range" min="0" max="0" value="0" aria-label="Снимок кода">
+        <span class="tinfo" id="tinfo">● LIVE</span>
+        <button class="chip back" id="tback" type="button">в настоящее</button>
+      </section>
+      <section class="bar glass padbar" id="padbar" hidden>
+        <button class="tool" id="toolPen" type="button" aria-pressed="true">Маркер</button>
+        <button class="tool" id="toolArrow" type="button" aria-pressed="false">Стрелка</button>
+        <button class="tool" id="toolClear" type="button">Очистить</button>
+      </section>
+
+      <div class="editor glass" id="editor">
+        <canvas id="surf" aria-hidden="true"></canvas>
+        <div class="gutter"><div id="gin"></div></div>
+        <div class="codebox" id="codebox">
+          <div id="hlwrap" aria-hidden="true"><div id="hlin"><div id="curline"></div><pre id="hl"></pre></div></div>
+          <textarea id="ta" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="Редактор кода Python"></textarea>
+        </div>
+        <canvas id="rays" aria-hidden="true"></canvas>
+        <canvas id="mini" aria-hidden="true"></canvas>
+        <canvas id="notes" aria-label="Слой заметок"></canvas>
+        <div class="orb" id="orb">
+          <div class="aura"></div>
+          <div class="core" id="core" tabindex="0" role="application" aria-label="Источник света. Перетаскивай мышью или двигай стрелками"></div>
+          <div class="hint">перетащи свет</div>
+        </div>
+      </div>
+
+      <section class="console glass" id="console" aria-live="polite"></section>
+    </main>
+
+    <aside class="chat glass" id="chat" hidden aria-label="Агент">
+      <div class="ch-head">
+        <span class="ch-title">Агент</span><span class="ch-model" id="chModel"></span><span class="sp"></span>
+        <button class="chip" id="chNew" type="button" title="Начать новый диалог">Новый</button>
+        <button class="chip" id="chCfg" type="button">Настройки</button>
+        <button class="chip" id="chClose" type="button" aria-label="Закрыть панель агента">×</button>
+      </div>
+      <div class="ch-log" id="chLog" role="log" aria-live="polite"></div>
+      <div class="ch-ctx">
+        <label for="chCtx">Отправлять</label>
+        <select id="chCtx"><option value="auto">выделение / функцию</option><option value="file">весь файл</option><option value="none">без кода</option></select>
+        <button class="chip" id="chPeek" type="button">Что уйдёт</button>
+      </div>
+      <div class="ch-est" id="chEst"></div>
+      <div class="ch-compose">
+        <textarea class="ch-in" id="chIn" rows="3" placeholder="Вопрос по коду. Enter — отправить, Shift+Enter — новая строка" aria-label="Вопрос агенту"></textarea>
+        <button class="chip primary" id="chSend" type="button">Отправить</button>
+      </div>
+      <div class="ch-use" id="chUse"></div>
+    </aside>
+
+    <section class="map glass" id="mapPane" hidden>
+      <svg id="svg" aria-label="Граф вызовов функций">
+        <defs>
+          <filter id="glow" x="-40%" y="-60%" width="180%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 10 5 0 9z" fill="rgba(34,211,238,.9)"/></marker>
+        </defs>
+        <g id="gEdges"></g><g id="gNodes"></g>
+      </svg>
+      <div class="mapempty" id="mapEmpty" hidden>В коде пока нет ни одной функции.<br>Добавь <code>def имя():</code> и вернись в этот режим.</div>
+      <div class="maphint">Перетаскивай узлы · двойной клик — код функции · Ctrl + колесо мыши — масштаб · тяни фон, чтобы сдвинуть</div>
+    </section>
+  </div>
+
+  <footer class="status glass">
+    <span id="pos">Ln 1, Col 1</span><span class="hide">Python 3</span><span class="hide">UTF-8</span><span class="hide">4 пробела</span>
+    <span class="sp"></span>
+    <span class="hide" id="keys">Ctrl+N · Ctrl+W · Ctrl+O · Ctrl+S · Ctrl+Shift+E файлы · Ctrl+Shift+L агент · Ctrl+Shift+G коммит · Ctrl+, настройки · Ctrl+T тема</span>
+    <button class="skinbtn" id="agentBtn" type="button" title="Агент (Ctrl+Shift+L)">Агент</button>
+    <button class="skinbtn" id="gitBtn" type="button" title="Коммит в git (Ctrl+Shift+G)">Коммит</button>
+    <button class="skinbtn" id="setBtn" type="button" title="Настройки (Ctrl+,)">Настройки</button>
+    <button class="skinbtn" id="themeDir" type="button" title="Открыть папку со своими темами (.json)">Папка тем</button>
+    <button class="skinbtn" id="skinBtn" type="button" title="Сменить тему (Ctrl+T)">Тема: Neon</button>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="rtoast" id="rtoast" role="status" aria-live="polite"><b id="rtTitle"></b><span id="rtSub"></span></div>
+
+<script src="js/core.js"></script>
+<script src="js/bots.js"></script>
+<script src="js/decor.js"></script>
+<script src="js/botwiz.js"></script>
+<script src="js/explorer.js"></script>
+<script src="js/lens.js"></script>
+<script src="js/agent.js"></script>
+<script src="js/gitdlg.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

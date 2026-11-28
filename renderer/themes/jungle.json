@@ -1,0 +1,44 @@
+{
+  "id": "jungle",
+  "name": "Jungle",
+  "scheme": "dark",
+  "texture": "none",
+  "glass": "frost",
+  "vars": {
+    "--bg": "#040a07",
+    "--acc": "74,222,128",
+    "--torch": "255,214,90",
+    "--aur1": "74,222,128",
+    "--aur2": "20,184,166",
+    "--aur3": "250,204,21",
+    "--panel": "rgba(9,21,15,.62)",
+    "--line": "rgba(190,255,210,.09)",
+    "--fg": "#dcefe2",
+    "--dim": "#78927f",
+    "--k": "#fde047",
+    "--b": "#5eead4",
+    "--s": "#bef264",
+    "--n": "#fb923c",
+    "--c": "#5f8068",
+    "--d": "#86efac",
+    "--f": "#6ee7b7",
+    "--sf": "#fdba74",
+    "--cl": "#fcd34d",
+    "--co": "#5eead4",
+    "--o": "#dcefe2"
+  },
+  "decor": {
+    "type": "vines",
+    "inset": 20,
+    "colors": {
+      "vine": "#c0701f",
+      "leaf": [
+        "#2fd37a",
+        "#16a085",
+        "#7be8a8",
+        "#1f8f58"
+      ],
+      "berry": "#ffa63d"
+    }
+  }
+}

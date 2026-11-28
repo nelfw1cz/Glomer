@@ -1,0 +1,16 @@
+{
+  "name": "pyforge",
+  "version": "0.3.0",
+  "description": "PyForge — Python editor with gamified modes and dynamic lighting",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "node test/logic.test.js && node test/main.test.js && node test/bots.test.js && node test/theme.test.js"
+  },
+  "repository": "github:nelfw1cz/Glomer",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}

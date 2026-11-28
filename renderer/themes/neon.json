@@ -1,0 +1,38 @@
+{
+  "id": "neon",
+  "name": "Neon",
+  "scheme": "dark",
+  "texture": "none",
+  "glass": "frost",
+  "vars": {
+    "--bg": "#06080c",
+    "--acc": "34,211,238",
+    "--torch": "255,140,26",
+    "--aur1": "34,211,238",
+    "--aur2": "167,139,250",
+    "--aur3": "255,77,133",
+    "--panel": "rgba(13,17,25,.60)",
+    "--line": "rgba(255,255,255,.08)",
+    "--fg": "#dfe5f0",
+    "--dim": "#7b869b",
+    "--k": "#ff6fa5",
+    "--b": "#7dd3fc",
+    "--s": "#86efac",
+    "--n": "#fbbf24",
+    "--c": "#5d6b82",
+    "--d": "#c4b5fd",
+    "--f": "#67e8f9",
+    "--sf": "#fda4af",
+    "--cl": "#fcd34d",
+    "--co": "#82ceff",
+    "--o": "#dfe5f0"
+  },
+  "decor": {
+    "type": "brackets",
+    "inset": 10,
+    "colors": {
+      "line": "#22d3ee",
+      "line2": "#a78bfa"
+    }
+  }
+}
